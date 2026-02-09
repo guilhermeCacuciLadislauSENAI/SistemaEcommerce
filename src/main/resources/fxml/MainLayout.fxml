@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="areaCentral" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ecommercesistema.controller.MainController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu fx:id="abrirHome" mnemonicParsing="false" text="Home">
+            <items>
+                <MenuItem onAction="#abrirHome" text="HomePage" />
+            </items>
+          </Menu>
+          <Menu fx:id="abrirCadastros" mnemonicParsing="false" text="Cadastros">
+            <items>
+                <MenuItem onAction="#abrirClientes" text="Clientes" />
+                <MenuItem onAction="#abrirProdutos" text="Produtos" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Vendas">
+              <items>
+                <MenuItem fx:id="abrirNovaVenda" mnemonicParsing="false" onAction="#abrirNovaVenda" text="Nova Venda" />
+                  <MenuItem fx:id="abrirRelatorioVendas" mnemonicParsing="false" onAction="#abrirRelatorioVendas" text="Relatório de Vendas" />
+              </items>
+            </Menu>
+          <Menu fx:id="botaoAjuda" mnemonicParsing="false" text="Ajuda">
+            <items>
+              <MenuItem fx:id="abrirAjuda" onAction="#abrirAjuda" text="Sobre" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <Label text="Tela Inicial" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

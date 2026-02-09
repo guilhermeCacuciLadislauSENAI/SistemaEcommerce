@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ecommercesistema.controller.ClientesController">
+   <children>
+      <TextField fx:id="nomeCliente" layoutX="132.0" layoutY="149.0" prefHeight="25.0" prefWidth="189.0" />
+      <TextField fx:id="cpfCliente" layoutX="132.0" layoutY="198.0" prefHeight="25.0" prefWidth="189.0" />
+      <TextField fx:id="telefoneCliente" layoutX="132.0" layoutY="246.0" prefHeight="25.0" prefWidth="189.0" />
+      <TextField fx:id="emailCliente" layoutX="132.0" layoutY="295.0" prefHeight="25.0" prefWidth="189.0" />
+      <TextField fx:id="enderecoCliente" layoutX="132.0" layoutY="350.0" prefHeight="25.0" prefWidth="189.0" />
+      <Label layoutX="90.0" layoutY="82.0" text="Cadastro de Clientes">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="73.0" layoutY="153.0" text="Nome" />
+      <Label layoutX="79.0" layoutY="202.0" text="CPF" />
+      <Label layoutX="67.0" layoutY="250.0" text="Telefone" />
+      <Label layoutX="73.0" layoutY="299.0" text="E-mail" />
+      <Label layoutX="65.0" layoutY="354.0" text="Endereço" />
+      <Button fx:id="salvarDadosCliente" layoutX="76.0" layoutY="431.0" mnemonicParsing="false" style="-fx-background-color: green;" text="Salvar" textFill="WHITE" />
+      <Button fx:id="limparDadosCliente" layoutX="173.0" layoutY="431.0" mnemonicParsing="false" style="-fx-background-color: red;" text="Limpar" textFill="WHITE" />
+      <Button fx:id="botaoVoltar" layoutX="269.0" layoutY="431.0" mnemonicParsing="false" onAction="#voltarParaHome" text="Voltar" />
+      <TableView fx:id="tabelaDadosClientes" layoutX="506.0" layoutY="117.0" prefHeight="335.0" prefWidth="264.0">
+        <columns>
+          <TableColumn prefWidth="87.0" text="Nome" />
+          <TableColumn prefWidth="83.0" text="CPF" />
+            <TableColumn prefWidth="92.0" text="Telefone" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
