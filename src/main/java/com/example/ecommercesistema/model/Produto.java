@@ -7,32 +7,53 @@ public class Produto {
     private double preco;
     private int estoque;
 
-    // Construtor vazio (obrigatório)
+    // Construtor vazio (OBRIGATÓRIO pro JavaFX)
     public Produto() {}
 
-    // Construtor com dados
+    // Construtor SEM ID (para INSERT)
     public Produto(String nome, double preco, int estoque) {
         this.nome = nome;
         this.preco = preco;
         this.estoque = estoque;
     }
 
-    // GETTERS
-    public int getId() { return id; }
-    public String getNome() { return nome; }
+    // Construtor COM ID (para SELECT)
+    public Produto(int id, String nome, double preco, int estoque) {
+        this.id = id;
+        this.nome = nome;
+        this.preco = preco;
+        this.estoque = estoque;
+    }
+
+    // GETTERS E SETTERS
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
     public double getPreco() {
         return preco;
     }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+
     public int getEstoque() {
         return estoque;
     }
 
-    //Setters
-    public void setId(int id) { this.id = id; }
-    public void setNome(String nome) { this.nome = nome; }
-    public void setPreco(double preco) {
-        this.preco = preco;
-    }
     public void setEstoque(int estoque) {
         this.estoque = estoque;
     }

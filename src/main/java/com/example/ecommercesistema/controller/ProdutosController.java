@@ -13,27 +13,47 @@ public class ProdutosController {
     @FXML private TextField precoProduto;
     @FXML private Spinner<Integer> estoqueProduto;
 
-    @FXML private TableView<Produto> tabelaProdutos;
-    @FXML private TableColumn<Produto, Integer> colId;
-    @FXML private TableColumn<Produto, String> colNome;
-    @FXML private TableColumn<Produto, Double> colPreco;
-    @FXML private TableColumn<Produto, Integer> colEstoque;
+    @FXML
+    private TableView<Produto> tabelaProdutos;
 
-    private ProdutoDAO dao = new ProdutoDAO();
+    @FXML
+    private TableColumn<Produto, Integer> colId;
+
+    @FXML
+    private TableColumn<Produto, String> colProduto;
+
+    @FXML
+    private TableColumn<Produto, Double> colPreco;
+
+    @FXML
+    private TableColumn<Produto, Integer> colEstoque;
+
+    private final ProdutoDAO produtoDAO = new ProdutoDAO();
     private Produto produtoSelecionado;
 
     @FXML
     public void initialize() {
+
+        // Inicializa o Spinner
+        SpinnerValueFactory<Integer> valueFactory =
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 1000, 0);
+        estoqueProduto.setValueFactory(valueFactory);
+
+        // Configuração da tabela
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        colProduto.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colPreco.setCellValueFactory(new PropertyValueFactory<>("preco"));
         colEstoque.setCellValueFactory(new PropertyValueFactory<>("estoque"));
 
-        estoqueProduto.setValueFactory(
-                new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10000, 0)
-        );
+        carregarProdutos();
+    }
 
-        atualizarTabela();
+    private void carregarProdutos() {
+        try {
+            tabelaProdutos.getItems().setAll(produtoDAO.listarTodos());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

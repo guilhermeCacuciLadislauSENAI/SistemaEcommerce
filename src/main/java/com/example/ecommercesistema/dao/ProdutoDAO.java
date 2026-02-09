@@ -8,11 +8,7 @@ import java.util.List;
 
 public class ProdutoDAO {
 
-    private static final String URL = "jdbc:mysql://localhost:3306?crud_java_GUILHERME";
-
-    private Connection conectar() throws SQLException {
-        return DriverManager.getConnection(URL);
-    }
+    private final ConnectionFactory connectionFactory = new ConnectionFactory();
 
     // CREATE
     public void salvar(Produto produto) throws SQLException {
@@ -21,7 +17,7 @@ public class ProdutoDAO {
             VALUES (?, ?, ?)
         """;
 
-        try (Connection conn = conectar();
+        try (Connection conn = connectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, produto.getNome());
@@ -37,7 +33,7 @@ public class ProdutoDAO {
         List<Produto> lista = new ArrayList<>();
         String sql = "SELECT * FROM produto";
 
-        try (Connection conn = conectar();
+        try (Connection conn = connectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -47,7 +43,6 @@ public class ProdutoDAO {
                 p.setNome(rs.getString("nome"));
                 p.setPreco(rs.getDouble("preco"));
                 p.setEstoque(rs.getInt("estoque"));
-
                 lista.add(p);
             }
         }
@@ -62,7 +57,7 @@ public class ProdutoDAO {
             WHERE id = ?
         """;
 
-        try (Connection conn = conectar();
+        try (Connection conn = connectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, produto.getNome());
@@ -78,7 +73,7 @@ public class ProdutoDAO {
     public void deletar(int id) throws SQLException {
         String sql = "DELETE FROM produto WHERE id = ?";
 
-        try (Connection conn = conectar();
+        try (Connection conn = connectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
