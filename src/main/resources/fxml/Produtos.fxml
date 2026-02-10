@@ -33,7 +33,7 @@
         <Button layoutX="181.0" layoutY="435.0" mnemonicParsing="false" onAction="#limparCampos" style="-fx-background-color: red;" text="Limpar" textFill="WHITE" />
 
         <!-- Tabela -->
-        <TableView fx:id="tabelaProdutos" layoutX="450.0" layoutY="139.0" prefHeight="321.0" prefWidth="360.0">
+        <TableView fx:id="tabelaProdutos" layoutX="450.0" layoutY="139.0" onMouseClicked="#selecionarItem" prefHeight="321.0" prefWidth="360.0">
 
             <columns>
                 <TableColumn fx:id="colId" prefWidth="60.0" text="ID" />

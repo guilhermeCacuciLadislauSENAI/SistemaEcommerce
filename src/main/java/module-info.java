@@ -12,4 +12,5 @@ module com.example.ecommercesistema {
     exports com.example.ecommercesistema;
     exports com.example.ecommercesistema.controller;
     opens com.example.ecommercesistema.controller to javafx.fxml;
+    opens com.example.ecommercesistema.model to javafx.base;
 }

@@ -21,14 +21,17 @@
       <Label layoutX="67.0" layoutY="250.0" text="Telefone" />
       <Label layoutX="73.0" layoutY="299.0" text="E-mail" />
       <Label layoutX="65.0" layoutY="354.0" text="Endereço" />
-      <Button fx:id="salvarDadosCliente" layoutX="76.0" layoutY="431.0" mnemonicParsing="false" style="-fx-background-color: green;" text="Salvar" textFill="WHITE" />
-      <Button fx:id="limparDadosCliente" layoutX="173.0" layoutY="431.0" mnemonicParsing="false" style="-fx-background-color: red;" text="Limpar" textFill="WHITE" />
-      <Button fx:id="botaoVoltar" layoutX="269.0" layoutY="431.0" mnemonicParsing="false" onAction="#voltarParaHome" text="Voltar" />
-      <TableView fx:id="tabelaDadosClientes" layoutX="506.0" layoutY="117.0" prefHeight="335.0" prefWidth="264.0">
+      <Button fx:id="botaoSalvar" layoutX="76.0" layoutY="431.0" mnemonicParsing="false" onAction="#salvarClientes" style="-fx-background-color: green;" text="Salvar" textFill="WHITE" />
+      <Button fx:id="botaoLimpar" layoutX="173.0" layoutY="431.0" mnemonicParsing="false" onAction="#limparCampos" style="-fx-background-color: red;" text="Limpar" textFill="WHITE" />
+      <Button fx:id="botaoExcluir" layoutX="269.0" layoutY="431.0" mnemonicParsing="false" onAction="#excluirCliente" text="Excluir" />
+      <TableView fx:id="tabelaDadosClientes" layoutX="372.0" layoutY="128.0" onMouseClicked="#selecionarCliente" prefHeight="335.0" prefWidth="488.0">
         <columns>
-          <TableColumn prefWidth="87.0" text="Nome" />
-          <TableColumn prefWidth="83.0" text="CPF" />
-            <TableColumn prefWidth="92.0" text="Telefone" />
+          <TableColumn fx:id="colId" prefWidth="63.0" text="ID" />
+          <TableColumn fx:id="colNome" prefWidth="93.0" text="Nome" />
+            <TableColumn fx:id="colCpf" prefWidth="106.0" text="CPF" />
+            <TableColumn fx:id="colTelefone" prefWidth="75.0" text="Telefone" />
+            <TableColumn fx:id="colEmail" prefWidth="75.0" text="Email" />
+            <TableColumn fx:id="colEndereco" prefWidth="75.0" text="Endereco" />
         </columns>
       </TableView>
    </children>

@@ -13,20 +13,11 @@ public class ProdutosController {
     @FXML private TextField precoProduto;
     @FXML private Spinner<Integer> estoqueProduto;
 
-    @FXML
-    private TableView<Produto> tabelaProdutos;
-
-    @FXML
-    private TableColumn<Produto, Integer> colId;
-
-    @FXML
-    private TableColumn<Produto, String> colProduto;
-
-    @FXML
-    private TableColumn<Produto, Double> colPreco;
-
-    @FXML
-    private TableColumn<Produto, Integer> colEstoque;
+    @FXML private TableView <Produto> tabelaProdutos;
+    @FXML private TableColumn <Produto, Integer> colId;
+    @FXML private TableColumn <Produto, String> colProduto;
+    @FXML private TableColumn <Produto, Double> colPreco;
+    @FXML private TableColumn <Produto, Integer> colEstoque;
 
     private final ProdutoDAO produtoDAO = new ProdutoDAO();
     private Produto produtoSelecionado;
@@ -60,7 +51,7 @@ public class ProdutosController {
     private void atualizarTabela() {
         try {
             tabelaProdutos.setItems(
-                    FXCollections.observableArrayList(dao.listarTodos())
+                    FXCollections.observableArrayList(produtoDAO.listarTodos())
             );
         } catch (Exception e) {
             exibirAlerta("Erro", "Erro ao carregar produtos");
@@ -81,12 +72,12 @@ public class ProdutosController {
                         Double.parseDouble(precoProduto.getText()),
                         estoqueProduto.getValue()
                 );
-                dao.salvar(p);
+                produtoDAO.salvar(p);
             } else {
                 produtoSelecionado.setNome(nomeProduto.getText());
                 produtoSelecionado.setPreco(Double.parseDouble(precoProduto.getText()));
                 produtoSelecionado.setEstoque(estoqueProduto.getValue());
-                dao.atualizar(produtoSelecionado);
+                produtoDAO.atualizar(produtoSelecionado);
             }
 
             atualizarTabela();
@@ -103,7 +94,7 @@ public class ProdutosController {
     public void excluirProduto() {
         if (produtoSelecionado != null) {
             try {
-                dao.deletar(produtoSelecionado.getId());
+                produtoDAO.deletar(produtoSelecionado.getId());
                 atualizarTabela();
                 limparCampos();
             } catch (Exception e) {
