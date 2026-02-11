@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ecommercesistema.controller.VendaController">
+   <children>
+      <Label layoutX="101.0" layoutY="86.0" text="Nova Venda">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboCliente" layoutX="145.0" layoutY="165.0" prefWidth="150.0" />
+      <ComboBox fx:id="comboProduto" layoutX="145.0" layoutY="216.0" prefWidth="150.0" />
+      <Spinner fx:id="spinnerQuantidade" layoutX="146.0" layoutY="265.0" />
+      <TextField fx:id="txtValorUnitario" layoutX="146.0" layoutY="314.0" />
+      <TextField fx:id="txtValorTotal" layoutX="146.0" layoutY="360.0" />
+      <Label layoutX="57.0" layoutY="169.0" text="Cliente" />
+      <Label layoutX="54.0" layoutY="220.0" text="Produto" />
+      <Label layoutX="44.0" layoutY="269.0" text="Quantidade" />
+      <Label layoutX="40.0" layoutY="318.0" text="Valor unitário" />
+      <Label layoutX="48.0" layoutY="364.0" text="Valor total" />
+      <Button layoutX="50.0" layoutY="428.0" mnemonicParsing="false" text="Adicionar item" />
+      <Button layoutX="295.0" layoutY="428.0" mnemonicParsing="false" text="Finalizar venda" />
+      <TableView fx:id="tabelaVenda" layoutX="405.0" layoutY="150.0" prefHeight="500.0" prefWidth="474.0">
+        <columns>
+          <TableColumn fx:id="colProduto" prefWidth="111.0" text="Produto" />
+            <TableColumn fx:id="colQuantidade" prefWidth="104.0" text="Quantidade" />
+            <TableColumn fx:id="colValorUni" prefWidth="120.0" text="Valor Unitário" />
+            <TableColumn fx:id="colValorTotal" prefWidth="138.0" text="Valor Total" />
+        </columns>
+      </TableView>
+      <Button layoutX="176.0" layoutY="428.0" mnemonicParsing="false" text="Remover item" />
+   </children>
+</AnchorPane>

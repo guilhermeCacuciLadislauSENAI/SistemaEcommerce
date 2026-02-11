@@ -25,7 +25,7 @@ public class MainController {
     }
 
     @FXML
-    public void abrirNovaVenda(){ carregarTela("NovaVenda.fxml"); }
+    public void abrirNovaVenda(){ carregarTela("Venda.fxml"); }
 
     @FXML
     public void abrirRelatorioVendas(){ carregarTela("RelatorioVendas.fxml"); }
