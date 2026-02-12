@@ -4,7 +4,6 @@ import com.example.ecommercesistema.dao.ClienteDAO;
 import com.example.ecommercesistema.model.Cliente;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;

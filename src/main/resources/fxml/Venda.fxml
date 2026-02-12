@@ -10,33 +10,31 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ecommercesistema.controller.VendaController">
+<AnchorPane prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #FFEBCD;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ecommercesistema.controller.VendaController">
    <children>
       <Label layoutX="101.0" layoutY="86.0" text="Nova Venda">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <ComboBox fx:id="comboCliente" layoutX="145.0" layoutY="165.0" prefWidth="150.0" />
-      <ComboBox fx:id="comboProduto" layoutX="145.0" layoutY="216.0" prefWidth="150.0" />
-      <Spinner fx:id="spinnerQuantidade" layoutX="146.0" layoutY="265.0" />
-      <TextField fx:id="txtValorUnitario" layoutX="146.0" layoutY="314.0" />
-      <TextField fx:id="txtValorTotal" layoutX="146.0" layoutY="360.0" />
-      <Label layoutX="57.0" layoutY="169.0" text="Cliente" />
-      <Label layoutX="54.0" layoutY="220.0" text="Produto" />
-      <Label layoutX="44.0" layoutY="269.0" text="Quantidade" />
-      <Label layoutX="40.0" layoutY="318.0" text="Valor unitário" />
-      <Label layoutX="48.0" layoutY="364.0" text="Valor total" />
-      <Button layoutX="50.0" layoutY="428.0" mnemonicParsing="false" text="Adicionar item" />
-      <Button layoutX="295.0" layoutY="428.0" mnemonicParsing="false" text="Finalizar venda" />
-      <TableView fx:id="tabelaVenda" layoutX="405.0" layoutY="150.0" prefHeight="500.0" prefWidth="474.0">
+      <ComboBox fx:id="comboCliente" layoutX="146.0" layoutY="150.0" prefWidth="150.0" />
+      <ComboBox fx:id="comboProduto" layoutX="146.0" layoutY="213.0" prefWidth="150.0" />
+      <Spinner fx:id="spinnerQuantidade" layoutX="147.0" layoutY="272.0" />
+      <Label layoutX="57.0" layoutY="154.0" text="Cliente" />
+      <Label layoutX="54.0" layoutY="217.0" text="Produto" />
+      <Label layoutX="45.0" layoutY="276.0" text="Quantidade" />
+      <Button layoutX="29.0" layoutY="428.0" mnemonicParsing="false" onAction="#adicionarItem" style="-fx-background-color: #32CD32;" text="Adicionar item" textFill="WHITE" />
+      <Button layoutX="100.0" layoutY="489.0" mnemonicParsing="false" onAction="#salvarVenda" text="Finalizar venda" />
+      <TableView fx:id="tabelaVenda" layoutX="312.0" layoutY="150.0" prefHeight="500.0" prefWidth="567.0">
         <columns>
-          <TableColumn fx:id="colProduto" prefWidth="111.0" text="Produto" />
-            <TableColumn fx:id="colQuantidade" prefWidth="104.0" text="Quantidade" />
-            <TableColumn fx:id="colValorUni" prefWidth="120.0" text="Valor Unitário" />
-            <TableColumn fx:id="colValorTotal" prefWidth="138.0" text="Valor Total" />
+            <TableColumn fx:id="colProduto" prefWidth="130.0" text="Produto" />
+            <TableColumn fx:id="colQuantidade" prefWidth="108.0" text="Quantidade" />
+            <TableColumn fx:id="colPrecoUnitario" prefWidth="160.0" text="Valor Unitário" />
+            <TableColumn fx:id="colPrecoTotal" prefWidth="168.0" text="Valor Total" />
         </columns>
       </TableView>
-      <Button layoutX="176.0" layoutY="428.0" mnemonicParsing="false" text="Remover item" />
+      <Button layoutX="162.0" layoutY="428.0" mnemonicParsing="false" onAction="#removerItem" style="-fx-background-color: #FF0000;" text="Remover item" textFill="WHITE" />
+      <TextField layoutX="147.0" layoutY="338.0" />
+      <Label layoutX="39.0" layoutY="342.0" text="Preço unitário" />
    </children>
 </AnchorPane>

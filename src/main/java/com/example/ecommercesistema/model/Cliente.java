@@ -43,4 +43,8 @@ public class Cliente {
     public void setEmail (String email) { this.email = email; }
     public void setEndereco (String endereco) { this.endereco = endereco; }
 
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

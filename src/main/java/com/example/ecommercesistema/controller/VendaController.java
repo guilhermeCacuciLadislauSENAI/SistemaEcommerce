@@ -3,10 +3,7 @@ package com.example.ecommercesistema.controller;
 import com.example.ecommercesistema.dao.ClienteDAO;
 import com.example.ecommercesistema.dao.ProdutoDAO;
 import com.example.ecommercesistema.dao.VendaDAO;
-import com.example.ecommercesistema.model.Cliente;
-import com.example.ecommercesistema.model.ItemVenda;
-import com.example.ecommercesistema.model.Produto;
-import com.example.ecommercesistema.model.Venda;
+import com.example.ecommercesistema.model.*;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -14,66 +11,41 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VendaController {
-
-    // ================================
-    // COMPONENTES DA TELA (FXML)
-    // ================================
 
     @FXML private ComboBox<Cliente> comboCliente;
     @FXML private ComboBox<Produto> comboProduto;
     @FXML private Spinner<Integer> spinnerQuantidade;
+    @FXML private DatePicker dateData;
 
-    @FXML private TextField txtPrecoUnitario;
-    @FXML private TextField txtPrecoTotal;
-
-    @FXML private TableView<ItemVenda> tabelaVenda;
+    @FXML private TableView<ItemVenda> tabelaItens;
     @FXML private TableColumn<ItemVenda, String> colProduto;
     @FXML private TableColumn<ItemVenda, Integer> colQuantidade;
-    @FXML private TableColumn<ItemVenda, Double> colValorUni;
-    @FXML private TableColumn<ItemVenda, Double> colValorTotal;
+    @FXML private TableColumn<ItemVenda, Double> colPrecoUnitario;
+    @FXML private TableColumn<ItemVenda, Double> colPrecoTotal;
 
-    // ================================
-    // DAOs
-    // ================================
+    private final ClienteDAO clienteDAO = new ClienteDAO();
+    private final ProdutoDAO produtoDAO = new ProdutoDAO();
+    private final VendaDAO vendaDAO = new VendaDAO();
 
-    private final ClienteDAO clienteDao = new ClienteDAO();
-    private final ProdutoDAO produtoDao = new ProdutoDAO();
-    private final VendaDAO vendaDao = new VendaDAO();
-
-    // ================================
-    // OBJETO QUE REPRESENTA A VENDA
-    // ================================
-
-    private Venda vendaAtual;
-
-    // ======================================================
-    // MÉTODO EXECUTADO QUANDO A TELA CARREGA
-    // ======================================================
+    private List<ItemVenda> listaItens = new ArrayList<>();
 
     @FXML
     public void initialize() {
 
-        // Criamos uma venda vazia na memória
-        vendaAtual = new Venda();
-        vendaAtual.setData(LocalDate.now());
-
-        // Carregar clientes no ComboBox
-        comboCliente.setItems(
-                FXCollections.observableArrayList(clienteDao.listarTodos())
-        );
-
-        // Carregar produtos no ComboBox
-        comboProduto.setItems(
-                FXCollections.observableArrayList(produtoDao.listarTodos())
-        );
+        // Configuração do Spinner
+        SpinnerValueFactory<Integer> valueFactory =
+                new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 1);
+        spinnerQuantidade.setValueFactory(valueFactory);
 
         // Configuração das colunas da tabela
 
-        colProduto.setCellValueFactory(cell ->
+        colProduto.setCellValueFactory(cellData ->
                 new javafx.beans.property.SimpleStringProperty(
-                        cell.getValue().getProduto().getNome()
+                        cellData.getValue().getProduto().getNome()
                 )
         );
 
@@ -81,132 +53,116 @@ public class VendaController {
                 new PropertyValueFactory<>("quantidade")
         );
 
-        colValorUni.setCellValueFactory(
+        colPrecoUnitario.setCellValueFactory(
                 new PropertyValueFactory<>("precoUnitario")
         );
 
-        colValorTotal.setCellValueFactory(
-                new PropertyValueFactory<>("valorTotal")
+        colPrecoTotal.setCellValueFactory(
+                new PropertyValueFactory<>("subTotal")
         );
 
-        // Configuração do Spinner
-        spinnerQuantidade.setValueFactory(
-                new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 1)
-        );
+        carregarClientes();
+        carregarProdutos();
     }
 
-    // ======================================================
-    // ADICIONAR ITEM À VENDA
-    // ======================================================
+    private void carregarClientes() {
+        try {
+            comboCliente.setItems(
+                    FXCollections.observableArrayList(clienteDAO.listarTodos())
+            );
+        } catch (Exception e) {
+            exibirAlerta("Erro", "Erro ao carregar clientes");
+        }
+    }
+
+    private void carregarProdutos() {
+        try {
+            comboProduto.setItems(
+                    FXCollections.observableArrayList(produtoDAO.listarTodos())
+            );
+        } catch (Exception e) {
+            exibirAlerta("Erro", "Erro ao carregar produtos");
+        }
+    }
 
     @FXML
-    public void adicionarItem() {
+    private void adicionarItem() {
 
-        Produto produtoSelecionado = comboProduto.getValue();
-
-        if (produtoSelecionado == null) {
-            exibirAlerta("Validação", "Selecione um produto!");
-            return;
-        }
-
+        Produto produto = comboProduto.getValue();
         int quantidade = spinnerQuantidade.getValue();
 
-        ItemVenda item = new ItemVenda();
-        item.setProduto(produtoSelecionado);
-        item.setQuantidade(quantidade);
-        item.setPrecoUnitario(produtoSelecionado.getPreco());
+        if (produto == null) {
+            exibirAlerta("Erro", "Selecione um produto!");
+            return;
+        }
 
-        // Regra de negócio pertence ao Model
-        vendaAtual.adicionarItem(item);
+        // Pega o preço atual do produto
+        double preco = produto.getPreco();
+
+        ItemVenda item = new ItemVenda(produto, quantidade, preco);
+
+        listaItens.add(item);
 
         atualizarTabela();
-        atualizarTotal();
     }
 
-    // ======================================================
-    // REMOVER ITEM
-    // ======================================================
-
     @FXML
-    public void removerItem() {
+    private void removerItem() {
 
-        ItemVenda itemSelecionado =
-                tabelaVenda.getSelectionModel().getSelectedItem();
+        ItemVenda selecionado =
+                tabelaItens.getSelectionModel().getSelectedItem();
 
-        if (itemSelecionado == null) {
-            exibirAlerta("Aviso", "Selecione um item!");
-            return;
+        if (selecionado != null) {
+            listaItens.remove(selecionado);
+            atualizarTabela();
+        } else {
+            exibirAlerta("Erro", "Selecione um item!");
         }
-
-        vendaAtual.removerItem(itemSelecionado);
-
-        atualizarTabela();
-        atualizarTotal();
     }
 
-    // ======================================================
-    // FINALIZAR VENDA
-    // ======================================================
+    private void atualizarTabela() {
+        tabelaItens.setItems(
+                FXCollections.observableArrayList(listaItens)
+        );
+    }
 
     @FXML
-    public void finalizarVenda() {
-
-        Cliente clienteSelecionado = comboCliente.getValue();
-
-        if (clienteSelecionado == null) {
-            exibirAlerta("Validação", "Selecione um cliente!");
-            return;
-        }
-
-        if (vendaAtual.getItens().isEmpty()) {
-            exibirAlerta("Validação", "Adicione pelo menos um produto!");
-            return;
-        }
-
-        vendaAtual.setCliente(clienteSelecionado);
+    private void salvarVenda() {
 
         try {
-            vendaDao.salvar(vendaAtual);
-            exibirAlerta("Sucesso", "Venda salva com sucesso!");
-            limparTela();
+
+            Cliente cliente = comboCliente.getValue();
+            LocalDate data = dateData.getValue();
+
+            if (cliente == null || data == null || listaItens.isEmpty()) {
+                exibirAlerta("Erro", "Preencha todos os campos e adicione itens!");
+                return;
+            }
+
+            Venda venda = new Venda(data, cliente, listaItens);
+
+            vendaDAO.salvar(venda);
+
+            exibirAlerta("Erro", "Venda salva com sucesso!");
+
+            limparCampos();
+
         } catch (Exception e) {
             exibirAlerta("Erro", e.getMessage());
         }
     }
 
-    // ======================================================
-    // MÉTODOS AUXILIARES
-    // ======================================================
+    private void limparCampos() {
 
-    private void atualizarTabela() {
-        tabelaVenda.setItems(
-                FXCollections.observableArrayList(vendaAtual.getItens())
-        );
-    }
-
-    private void atualizarTotal() {
-
-        double total = 0;
-
-        for (ItemVenda item : vendaAtual.getItens()) {
-            total += item.getValorTotal();
-        }
-
-        txtPrecoTotal.setText(String.valueOf(total));
-    }
-
-    private void limparTela() {
-
-        vendaAtual = new Venda();
-        vendaAtual.setData(LocalDate.now());
-
-        tabelaVenda.getItems().clear();
         comboCliente.getSelectionModel().clearSelection();
         comboProduto.getSelectionModel().clearSelection();
-        txtPrecoTotal.clear();
+        spinnerQuantidade.getValueFactory().setValue(1);
+        dateData.setValue(null);
+
+        listaItens.clear();
+        atualizarTabela();
     }
 
-    // ALERTA PADRONIZADO (ERROR)
     private void exibirAlerta(String titulo, String msg) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(titulo);

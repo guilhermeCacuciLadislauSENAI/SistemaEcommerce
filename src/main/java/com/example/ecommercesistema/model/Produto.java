@@ -25,36 +25,20 @@ public class Produto {
         this.estoque = estoque;
     }
 
-    // GETTERS E SETTERS
-    public int getId() {
-        return id;
-    }
+    // GETTERS
+    public int getId() { return id; }
+    public int getEstoque() { return estoque; }
+    public double getPreco() { return preco; }
+    public String getNome() { return nome; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    // SETTERS
+    public void setId(int id) { this.id = id; }
+    public void setNome(String nome) { this.nome = nome; }
+    public void setPreco(double preco) { this.preco = preco; }
+    public void setEstoque(int estoque) { this.estoque = estoque; }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public double getPreco() {
-        return preco;
-    }
-
-    public void setPreco(double preco) {
-        this.preco = preco;
-    }
-
-    public int getEstoque() {
-        return estoque;
-    }
-
-    public void setEstoque(int estoque) {
-        this.estoque = estoque;
+    @Override
+    public String toString() {
+        return nome + " - R$ " + String.format("%.2f", preco);
     }
 }

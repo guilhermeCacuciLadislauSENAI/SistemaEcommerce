@@ -55,13 +55,6 @@ public class MainController {
             );
 
             areaCentral.setCenter(loader.load());
-
-            // se for a tela de clientes, injeta o controller principal
-            Object controller = loader.getController();
-            if (controller instanceof ClientesController clientesController) {
-                clientesController.setMainController(this);
-            }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
